@@ -10,6 +10,8 @@ import GameplayKit
 
 class GameScene: SKScene {
     var ball = SKShapeNode()
+    var paddle = SKSpriteNode()
+    
     override func didMove(to view: SKView) {
         createBackground()
         resetGame()
@@ -19,6 +21,7 @@ class GameScene: SKScene {
     
     func resetGame() {
         makeBall()
+        makePaddle()
     }
     
     func createBackground() {
@@ -36,6 +39,7 @@ class GameScene: SKScene {
 
         }
     }
+    
     func makeBall() {
         ball.removeFromParent()
         ball = SKShapeNode(circleOfRadius: 10)
@@ -54,6 +58,16 @@ class GameScene: SKScene {
         ball.physicsBody?.contactTestBitMask = (ball.physicsBody?.contactTestBitMask)!
         
         addChild(ball)
+    }
+    
+    func makePaddle() {
+        paddle.removeFromParent() //remove the paddle, if it exists
+        paddle = SKSpriteNode(color: .white, size: CGSize(width: frame.width/4, height: 20))
+        paddle.position = CGPoint(x: frame.midX, y: frame.midY - 125)
+        paddle.name = "paddle"
+        paddle.physicsBody = SKPhysicsBody(rectangleOf: paddle.size)
+        paddle.physicsBody?.isDynamic = false
+        addChild(paddle)
     }
 }
 
